@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow - Premium Task Dashboard made with HTML, CSS, and JS.">
+  
+  <!-- SEO & Open Graph Meta Tags for Portfolio -->
+  <meta property="og:title" content="TaskFlow - Premium Task Dashboard">
+  <meta property="og:description" content="A highly optimized, cyberpunk-themed task management dashboard built with vanilla JavaScript.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618477247222-ac60c628574e?q=80&w=1200&auto=format&fit=crop">
+  <meta property="og:type" content="website">
+  
+  <!-- Dynamic SVG Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  
+  <title>TaskFlow - Premium Dashboard</title>
+  <link href="https://fonts.cdnfonts.com/css/dseg7-classic-mini" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow bg-glow-one"></div>
+  <div class="bg-glow bg-glow-two"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main menu">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">TF</div>
+        <div>
+          <strong>TaskFlow</strong>
+          <span>Adi workspace</span>
+        </div>
+      </div>
+
+      <nav class="side-nav" aria-label="Dashboard links">
+        <a class="side-link active" href="#dashboard">
+          <span class="nav-icon dashboard-icon" aria-hidden="true"></span>
+          Dashboard
+        </a>
+        <a class="side-link" href="#tasks">
+          <span class="nav-icon tasks-icon" aria-hidden="true"></span>
+          Tasks
+        </a>
+        <a class="side-link" href="#analytics">
+          <span class="nav-icon chart-icon" aria-hidden="true"></span>
+          Analytics
+        </a>
+        <a class="side-link" href="#settings">
+          <span class="nav-icon settings-icon" aria-hidden="true"></span>
+          Settings
+        </a>
+      </nav>
+
+      <div class="side-panel">
+        <p class="tiny-label">Today</p>
+        <p class="side-date" id="sideDate">Loading date</p>
+        <div class="mini-meter" aria-hidden="true">
+          <span></span>
+        </div>
+        <p class="side-note">Small steps make good work.</p>
+      </div>
+
+      <button class="logout-btn" type="button" data-ripple>
+        <span class="logout-icon" aria-hidden="true"></span>
+        Logout
+      </button>
+    </aside>
+
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <div class="main-area">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuToggle" type="button" aria-label="Open menu" data-ripple>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+
+        <a class="mobile-brand" href="#dashboard" aria-label="TaskFlow home">
+          <span class="brand-mark small" aria-hidden="true">TF</span>
+          TaskFlow - Adi
+        </a>
+
+        <label class="search-box" for="searchInput">
+          <span class="search-icon" aria-hidden="true"></span>
+          <input id="searchInput" type="search" placeholder="Search tasks" autocomplete="off">
+          <kbd>Ctrl K</kbd>
+        </label>
+
+        <div class="top-actions">
+          <button class="icon-btn notification-btn" id="notifyBtn" type="button" aria-label="Show alert" data-ripple>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--blue);" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+            <span class="notify-dot" aria-hidden="true"></span>
+          </button>
+
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" data-ripple>
+            <span class="theme-track" aria-hidden="true">
+              <span class="theme-thumb"></span>
+            </span>
+            <span class="theme-text">Dark</span>
+          </button>
+
+          <div class="profile">
+            <div class="avatar" aria-hidden="true">A</div>
+            <div>
+              <strong>Adi</strong>
+              <span>Task lead</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="welcome-card load-pop" id="dashboard" aria-labelledby="welcomeTitle">
+          <div>
+            <p class="tiny-label">Welcome back</p>
+            <h1 id="welcomeTitle">TaskFlow - Adi</h1>
+            <p class="welcome-copy">Plan your work, move tasks, and finish your day with a clear board.</p>
+            <div class="quick-actions">
+              <button class="primary-btn" id="addTaskTop" type="button" data-ripple>Add task</button>
+              <a class="soft-btn" href="#analytics">View charts</a>
+            </div>
+          </div>
+
+          <div class="live-card dev-vibe" aria-label="Live date and time">
+            <span class="live-label"><span class="pulse-dot"></span>Live time</span>
+            <strong id="liveTime" class="mono-time">--:--</strong>
+            <span id="liveDate" class="mono-date">Loading date</span>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Task overview">
+          <article class="stat-card load-pop">
+            <span class="stat-icon total-icon" aria-hidden="true"></span>
+            <div>
+              <p>Total tasks</p>
+              <strong id="totalTasks">0</strong>
+            </div>
+          </article>
+
+          <article class="stat-card load-pop">
+            <span class="stat-icon done-icon" aria-hidden="true"></span>
+            <div>
+              <p>Completed</p>
+              <strong id="doneTasks">0</strong>
+            </div>
+          </article>
+
+          <article class="stat-card load-pop">
+            <span class="stat-icon pending-icon" aria-hidden="true"></span>
+            <div>
+              <p>Pending</p>
+              <strong id="pendingTasks">0</strong>
+            </div>
+          </article>
+
+          <article class="stat-card progress-stat load-pop">
+            <div class="ring small-ring" id="productivityRing" aria-hidden="true">
+              <span id="productivityText">0%</span>
+            </div>
+            <div>
+              <p>Productivity</p>
+              <strong id="productivityLabel">0%</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="analytics-section" id="analytics" aria-labelledby="analyticsTitle">
+          <div class="section-head">
+            <div>
+              <p class="tiny-label">Analytics</p>
+              <h2 id="analyticsTitle">Simple progress view</h2>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <p>Completed tasks</p>
+                  <strong id="completedPercent">0%</strong>
+                </div>
+                <span class="chip green">Done</span>
+              </div>
+              <div class="ring big-ring" id="completedRing" aria-label="Completed task chart">
+                <span id="completedRingText">0%</span>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <p>Pending tasks</p>
+                  <strong id="pendingPercent">0%</strong>
+                </div>
+                <span class="chip blue">Open</span>
+              </div>
+              <div class="ring big-ring pending-ring" id="pendingRing" aria-label="Pending task chart">
+                <span id="pendingRingText">0%</span>
+              </div>
+            </article>
+
+            <article class="chart-card weekly-card">
+              <div class="chart-head">
+                <div>
+                  <p>Weekly progress</p>
+                  <strong id="weekSummary">7 days</strong>
+                </div>
+                <span class="chip purple">Week</span>
+              </div>
+              <div class="bar-chart" id="weeklyChart" aria-label="Weekly progress chart"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="tasks-section" id="tasks" aria-labelledby="tasksTitle">
+          <div class="section-head task-head">
+            <div>
+              <p class="tiny-label">Board</p>
+              <h2 id="tasksTitle">Your tasks</h2>
+            </div>
+            <div class="task-controls">
+              <select id="statusFilter" aria-label="Filter by status">
+                <option value="all">All status</option>
+                <option value="todo">To Do</option>
+                <option value="progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+              <select id="priorityFilter" aria-label="Filter by priority">
+                <option value="all">All priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+              <button class="primary-btn compact" id="addTaskBtn" type="button" data-ripple>Add task</button>
+            </div>
+          </div>
+
+          <div class="board" id="board">
+            <section class="board-column" data-status="todo" aria-labelledby="todoTitle">
+              <div class="column-head">
+                <div>
+                  <h3 id="todoTitle">To Do</h3>
+                  <span>Ready to start</span>
+                </div>
+                <strong id="todoCount">0</strong>
+              </div>
+              <div class="task-list" id="todoList"></div>
+            </section>
+
+            <section class="board-column" data-status="progress" aria-labelledby="progressTitle">
+              <div class="column-head">
+                <div>
+                  <h3 id="progressTitle">In Progress</h3>
+                  <span>Work in action</span>
+                </div>
+                <strong id="progressCount">0</strong>
+              </div>
+              <div class="task-list" id="progressList"></div>
+            </section>
+
+            <section class="board-column" data-status="done" aria-labelledby="doneTitle">
+              <div class="column-head">
+                <div>
+                  <h3 id="doneTitle">Done</h3>
+                  <span>Good work</span>
+                </div>
+                <strong id="doneCount">0</strong>
+              </div>
+              <div class="task-list" id="doneList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="settings-section" id="settings" aria-label="Settings">
+          <div class="settings-card">
+            <div>
+              <p class="tiny-label">Settings</p>
+              <h2>Fast keys</h2>
+              <p>Press N to add a task. Press Ctrl K to search. Press Esc to close the task form.</p>
+            </div>
+            <button class="soft-btn button-reset" id="resetDemo" type="button" data-ripple>Load sample tasks</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <button class="fab" id="fabAdd" type="button" aria-label="Add task" data-ripple>+</button>
+
+  <div class="modal is-hidden" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <form class="task-form" id="taskForm">
+      <div class="modal-head">
+        <div>
+          <p class="tiny-label">Task details</p>
+          <h2 id="modalTitle">Add task</h2>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Close form" data-close-modal data-ripple>
+          <span class="close-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <input type="hidden" id="taskId">
+
+      <label>
+        Task title
+        <input id="taskTitle" type="text" placeholder="Write task title" maxlength="70" required>
+      </label>
+
+      <label>
+        Short note
+        <textarea id="taskNote" rows="4" placeholder="Add a short note" maxlength="180"></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label>
+          Due date
+          <input id="taskDue" type="date">
+        </label>
+
+        <label>
+          Priority
+          <select id="taskPriority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Status
+        <select id="taskStatus">
+          <option value="todo">To Do</option>
+          <option value="progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </label>
+
+      <div class="modal-actions">
+        <button class="soft-btn" type="button" data-close-modal>Cancel</button>
+        <button class="primary-btn" type="submit" data-ripple>Save task</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
